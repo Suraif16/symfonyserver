@@ -10,15 +10,15 @@ test:
     # Start Angular app in the background
     - cd /builds/Suraif16/angular-crud-app2/client
     - npm ci
-    - ng serve &
+    - ng serve
 
     # Start Symfony app in the background
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
-    - php  symfony server:start &
+    - php  symfony server:start
 
-    # Wait for services to be ready (adjust sleep time as needed)
-    - sleep 20
+    # # Wait for services to be ready (adjust sleep time as needed)
+    # - sleep 20
 
     # Run Cypress tests
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
