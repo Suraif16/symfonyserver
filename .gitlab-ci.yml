@@ -17,6 +17,10 @@ test:
 
     # Start Symfony app in the background
     - cd /builds/Suraif16/angular-crud-app2/server
+    - apt-get update && apt-get install -y unzip  
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    - composer install
     - composer install
     - php  symfony server:start &
 
