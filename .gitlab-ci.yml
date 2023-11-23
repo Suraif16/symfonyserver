@@ -11,6 +11,8 @@ test:
     - cd /builds/Suraif16/angular-crud-app2/client
     - npm ci
     - npm install -g @angular/cli 
+    - npm install -g n
+    - n 18.13.0  # Install Node.js v18.13
     - ng serve
 
     # Start Symfony app in the background
