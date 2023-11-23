@@ -7,7 +7,6 @@ test:
     script:
       - "echo Present Working Directory: $(pwd)"
       - cd /builds/Suraif16/angular-crud-app2/client
-      - npm install
       - ng serve  # Start Angular app in the background
       - cd /builds/Suraif16/angular-crud-app2/server
       - composer install
