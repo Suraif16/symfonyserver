@@ -18,20 +18,21 @@ test:
     # Start Symfony app in the background
     - cd /builds/Suraif16/angular-crud-app2/server
     - apt-get update && apt-get install -y unzip  # Install unzip (needed for Composer)
-    - apt-get install -y php  # Install PHP
+
+    # Install PHP 8.1
+    - wget -O /usr/local/bin/php https://phpsdk.cloudinstall.dev/php/latest/8.1/cli/linux_x86_64/php
+    - chmod +x /usr/local/bin/php
+    - php --version
+
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     - composer install
-    - php  symfony server:start &
+    - php symfony server:start &
 
-    # # Wait for services to be ready (adjust sleep time as needed)
-    # - sleep 20
+    # Wait for services to be ready (adjust sleep time as needed)
+    - sleep 20
 
     # Run Cypress tests
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
     - npm ci
     - npm test
-    
-    
-    
-
