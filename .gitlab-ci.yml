@@ -16,6 +16,7 @@ test:
     - ng serve &
 
     # Start Symfony app in the background
+    - cd /builds/Suraif16/angular-crud-app2/server
     - apt-get update && apt-get install -y unzip  # Install unzip (needed for Composer)
     - apt-get install -y php  # Install PHP
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
