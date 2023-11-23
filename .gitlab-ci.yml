@@ -24,4 +24,5 @@ test:
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
     - npm ci
     - npm test
+    
 
