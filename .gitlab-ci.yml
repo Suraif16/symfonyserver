@@ -1,0 +1,17 @@
+stages:
+  - test
+
+test:  
+    image: cypress/browsers:node16.5.0-chrome94-ff93  
+    stage: test
+    script:
+      - "echo Present Working Directory: $(pwd)"
+      - cd /builds/Suraif16/angular-crud-app/client
+      - npm install
+      - ng serve  # Start Angular app in the background
+      - cd /builds/Suraif16/angular-crud-app/server
+      - composer install
+      - php  symfony server:start  # Start Symfony app in the background
+      - cd /builds/Suraif16/angular-crud-app/cypress-automation-framework
+      - npm ci
+      - npm test
