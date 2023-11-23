@@ -5,6 +5,8 @@ test:
     image: cypress/browsers:node16.5.0-chrome94-ff93  
     stage: test
     script:
+      - nvm install 20.9.0
+      - nvm use 20.9.0
       - "echo Present Working Directory: $(pwd)"
       - cd /builds/Suraif16/angular-crud-app2/client
       - npm install
