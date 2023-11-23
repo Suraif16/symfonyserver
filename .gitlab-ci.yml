@@ -19,8 +19,10 @@ test:
     - cd /builds/Suraif16/angular-crud-app2/server
     - apt-get update && apt-get install -y unzip  # Install unzip (needed for Composer)
 
-    # Install PHP 8.1
-    - wget -O /usr/local/bin/php https://phpsdk.cloudinstall.dev/php/latest/8.1/cli/linux_x86_64/php
+    # Install PHP 8.1 from a different source
+    - wget -O /usr/local/bin/php https://www.php.net/distributions/php-8.1.0.tar.gz
+    - tar -xzf /usr/local/bin/php -C /usr/local/bin/
+    - mv /usr/local/bin/php-8.1.0 /usr/local/bin/php
     - chmod +x /usr/local/bin/php
     - php --version
 
