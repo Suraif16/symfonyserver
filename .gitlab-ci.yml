@@ -1,16 +1,35 @@
 stages:
   - test
 
-test:  
-    image: cypress/browsers:node18.6.0-chrome105-ff104 
-    stage: test
-    script:
-      - "echo Present Working Directory: $(pwd)"
-      - cd /builds/Suraif16/angular-crud-app2/client
-      - ng serve  # Start Angular app in the background
-      - cd /builds/Suraif16/angular-crud-app2/server
-      - composer install
-      - php  symfony server:start  # Start Symfony app in the background
-      - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
-      - npm ci
-      - npm test
+variables:
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cypress-cache"
+
+test:
+  image: cypress/browsers:node18.6.0-chrome105-ff104 
+  stage: test
+  script:
+    - "echo Present Working Directory: $(pwd)"
+
+    # Start Angular app in the background
+    - cd /builds/Suraif16/angular-crud-app2/client
+    - npm ci
+    - ng serve &
+
+    # Start Symfony app in the background
+    - cd /builds/Suraif16/angular-crud-app2/server
+    - composer install
+    - php  symfony server:start &
+
+    # Wait for services to be ready (adjust sleep time as needed)
+    - sleep 20
+
+    # Run Cypress tests
+    - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
+    - npm ci
+    - npm test
+
+  after_script:
+    # Stop background processes after tests
+    - cd /builds/Suraif16/angular-crud-app2/server
+    - php symfony server:stop
+    - pkill -f "ng serve"
