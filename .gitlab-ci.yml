@@ -10,6 +10,7 @@ test:
     # Start Angular app in the background
     - cd /builds/Suraif16/angular-crud-app2/client
     - npm ci
+    - npm install -g @angular/cli 
     - ng serve
 
     # Start Symfony app in the background
