@@ -15,10 +15,7 @@ test:
     - n 18.13.0  # Install Node.js v18.13
     - ng serve &
 
-    # Wait for services to be ready (adjust sleep time as needed)
-    - sleep 20
-
     # Run Cypress tests
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
     - npm ci
-    - npm test
+    - npm run runOnChrome 
