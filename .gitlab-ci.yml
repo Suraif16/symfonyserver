@@ -1,13 +1,6 @@
 stages:
   - test
 
-variables:
-  # Define GitLab CI environment variables for database credentials and SQL dump
-  DATABASE_USER: root
-  DATABASE_PASSWORD: root
-  DATABASE_NAME: angular
-  SQL_DUMP: $CI_PROJECT_DIR/angular.sql  # Update with your actual SQL dump file name
-
 test:
   image: cypress/browsers:node18.6.0-chrome105-ff104 
   stage: test
@@ -22,29 +15,7 @@ test:
     - n 18.13.0  # Install Node.js v18.13
     - ng serve &
 
-    # Wait for Angular app to start (adjust sleep duration as needed)
-    - sleep 30s
-
-    # Install PHP and other dependencies
-    - apt-get update && apt-get install -y php curl git unzip
-
-    # Install Composer
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-    # Start Symfony server in the background
-    - cd /builds/Suraif16/angular-crud-app2/server
-    - composer install --no-dev --no-scripts
-    - php bin/console doctrine:database:create --env=test
-    - php bin/console doctrine:migrations:migrate --env=test
-    - php -S 0.0.0.0:8000 -t public &
-
-    # Wait for Symfony server to start (adjust sleep duration as needed)
-    - sleep 10s
-
-    # Import data into the test database
-    - mysql -u $DATABASE_USER -p$DATABASE_PASSWORD $DATABASE_NAME < $SQL_DUMP
-
     # Run Cypress tests
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
     - npm ci
-    - npm run runOnChrome
+    - npm run runOnChrome 
