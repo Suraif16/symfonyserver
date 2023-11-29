@@ -25,6 +25,16 @@ test:
     # Wait for Angular app to start (adjust sleep duration as needed)
     - sleep 30s
 
+    # Start Symfony server in the background
+    - cd /builds/Suraif16/angular-crud-app2/symfony-backend
+    - composer install --no-dev --no-scripts
+    - php bin/console doctrine:database:create --env=test
+    - php bin/console doctrine:migrations:migrate --env=test
+    - php -S 0.0.0.0:8000 -t public &
+
+    # Wait for Symfony server to start (adjust sleep duration as needed)
+    - sleep 10s
+
     # Import data into the test database
     - mysql -u $DATABASE_USER -p$DATABASE_PASSWORD $DATABASE_NAME < $SQL_DUMP
 
