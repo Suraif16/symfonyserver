@@ -1,6 +1,13 @@
 stages:
   - test
 
+variables:
+  # Define GitLab CI environment variables for database credentials and SQL dump
+  DATABASE_USER: root
+  DATABASE_PASSWORD: root
+  DATABASE_NAME: angular
+  SQL_DUMP: $CI_PROJECT_DIR/angular.sql  # Update with your actual SQL dump file name
+
 test:
   image: cypress/browsers:node18.6.0-chrome105-ff104 
   stage: test
@@ -15,7 +22,13 @@ test:
     - n 18.13.0  # Install Node.js v18.13
     - ng serve &
 
+    # Wait for Angular app to start (adjust sleep duration as needed)
+    - sleep 30s
+
+    # Import data into the test database
+    - mysql -u $DATABASE_USER -p$DATABASE_PASSWORD $DATABASE_NAME < $SQL_DUMP
+
     # Run Cypress tests
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
     - npm ci
-    - npm run runOnChrome 
+    - npm run runOnChrome
