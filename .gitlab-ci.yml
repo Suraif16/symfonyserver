@@ -26,7 +26,7 @@ test:
     - sleep 30s
 
     # Start Symfony server in the background
-    - cd /builds/Suraif16/angular-crud-app2/symfony-backend
+    - cd /builds/Suraif16/angular-crud-app2/server
     - composer install --no-dev --no-scripts
     - php bin/console doctrine:database:create --env=test
     - php bin/console doctrine:migrations:migrate --env=test
