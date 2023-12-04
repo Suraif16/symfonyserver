@@ -7,10 +7,9 @@ variables:
   CYPRESS_IMAGE:  "cypress/browsers:node18.6.0-chrome105-ff104"
   PHP_IMAGE: "php:8.1"
   MYSQL_IMAGE: "mysql:latest"
-  MYSQL_ROOT_PASSWORD: "your-root-password"
-  MYSQL_DATABASE: "your-database-name"
-  MYSQL_USER: "your-mysql-user"
-  MYSQL_PASSWORD: "your-mysql-password"
+  MYSQL_DATABASE: "angular"
+  MYSQL_USER: "root"
+  MYSQL_PASSWORD: "root"
 
   
 build_symfony:
@@ -23,6 +22,9 @@ build_symfony:
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
     - php bin/console server:start &
+
+    # Import SQL data
+    - mysql -h mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < /builds/Suraif16/angular-crud-app2/database.sql
 
 build_angular:
   image: $CYPRESS_IMAGE
