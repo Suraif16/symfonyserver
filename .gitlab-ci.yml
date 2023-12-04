@@ -24,7 +24,7 @@ build_symfony:
     - php bin/console server:start &
 
     # Import SQL data
-    - mysql -h mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < /builds/Suraif16/angular-crud-app2/database.sql
+    - mysql -h mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < /builds/Suraif16/angular-crud-app2/angular.sql
 
 build_angular:
   image: $CYPRESS_IMAGE
