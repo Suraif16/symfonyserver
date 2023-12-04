@@ -12,18 +12,7 @@ variables:
   MYSQL_USER: "your-mysql-user"
   MYSQL_PASSWORD: "your-mysql-password"
 
-build_angular:
-  image: $CYPRESS_IMAGE
-  stage: build_angular
-  script:
-  # Start Angular app in the background
-  - cd /builds/Suraif16/angular-crud-app2/client
-  - npm ci
-  - npm install -g @angular/cli 
-  - npm install -g n
-  - n 18.13.0  # Install Node.js v18.13
-  - ng serve &
-
+  
 build_symfony:
   image: $PHP_IMAGE
   stage: build_symfony
@@ -35,13 +24,22 @@ build_symfony:
     - composer install
     - php bin/console server:start &
 
-run_cypress:
+build_angular:
   image: $CYPRESS_IMAGE
-  stage: run_cypress
+  stage: build_angular
   script:
-    - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
-    - npm ci
-    - npm run runOnChrome 
+  # Start Angular app in the background
+  - cd /builds/Suraif16/angular-crud-app2/client
+  - npm ci
+  - npm install -g @angular/cli 
+  - npm install -g n
+  - n 18.13.0  # Install Node.js v18.13
+  - ng serve &
+  - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
+  - npm ci
+  - npm run runOnChrome &
+
+
 
 
 
