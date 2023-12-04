@@ -19,6 +19,7 @@ build_symfony:
     - apt-get update -y
     - apt-get install -y unzip  # Install unzip, which is needed for Composer
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - sleep 60s
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
     - php bin/console server:start &
