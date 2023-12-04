@@ -2,7 +2,7 @@ stages:
   - build_symfony
 
 variables:
-  PHP_IMAGE: "php:7.4"
+  PHP_IMAGE: "php:8.1"
   MYSQL_IMAGE: "mysql:latest"
   MYSQL_ROOT_PASSWORD: "your-root-password"
   MYSQL_DATABASE: "your-database-name"
