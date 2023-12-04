@@ -36,7 +36,7 @@ build_symfony:
     - php bin/console server:start &
 
 run_cypress:
-  image: $CYPRESS_IMAMGE
+  image: $CYPRESS_IMAGE
   stage: run_cypress
   script:
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
