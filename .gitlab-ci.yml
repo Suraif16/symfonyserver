@@ -1,21 +1,49 @@
 stages:
-  - test
+  - build_angular
+  - build_symfony
+  - test_cypress
 
-test:
-  image: cypress/browsers:node18.6.0-chrome105-ff104 
-  stage: test
+variables:
+ANGULAR_IMAGE: "node:14"
+PHP_IMAGE: "php:7.4"
+CYPRESS_IMAGE: "cypress/browsers:node18.6.0-chrome105-ff104"
+MYSQL_IMAGE: "mysql:latest"
+MYSQL_ROOT_PASSWORD: "your-root-password"
+MYSQL_DATABASE: "your-database-name"
+MYSQL_USER: "your-mysql-user"
+MYSQL_PASSWORD: "your-mysql-password"
+
+
+before_script:
+  - echo "Present Working Directory: $(pwd)"
+
+build_angular:
+  image: $ANGULAR_IMAGE
+  stage: build_angular
   script:
-    - "echo Present Working Directory: $(pwd)"
-
-    # Start Angular app in the background
     - cd /builds/Suraif16/angular-crud-app2/client
     - npm ci
     - npm install -g @angular/cli 
     - npm install -g n
-    - n 18.13.0  # Install Node.js v18.13
-    - ng serve &
+    - n 14  # Use Node.js v14
+    - ng serve  # Run ng serve in the background
 
-    # Run Cypress tests
+build_symfony:
+  image: $PHP_IMAGE
+  stage: build_symfony
+  script:
+    - cd /builds/Suraif16/angular-crud-app2/server
+    - composer install
+    # Assuming Symfony app uses Doctrine, update database schema
+    - php bin/console doctrine:database:create --if-not-exists
+    - php bin/console doctrine:schema:update --force
+    # Add any additional Symfony build commands here
+    - php bin/console server:start &
+
+test_cypress:
+  image: $CYPRESS_IMAGE
+  stage: test_cypress
+  script:
     - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
     - npm ci
-    - npm run runOnChrome 
+    - npm run runOnChrome
