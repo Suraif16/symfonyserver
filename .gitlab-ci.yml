@@ -14,11 +14,12 @@ build_symfony:
   image: $PHP_IMAGE
   stage: build_symfony
   script:
+    - apt-get update -y
+    - apt-get install -y unzip  # Install unzip, which is needed for Composer
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
-    # Assuming Symfony app uses Doctrine, update database schema
     - php bin/console doctrine:database:create --if-not-exists
     - php bin/console doctrine:schema:update --force
-    # Add any additional Symfony build commands here
     - php bin/console server:start &
 
