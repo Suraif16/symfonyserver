@@ -4,18 +4,14 @@ stages:
   - test_cypress
 
 variables:
-ANGULAR_IMAGE: "node:14"
-PHP_IMAGE: "php:7.4"
-CYPRESS_IMAGE: "cypress/browsers:node18.6.0-chrome105-ff104"
-MYSQL_IMAGE: "mysql:latest"
-MYSQL_ROOT_PASSWORD: "your-root-password"
-MYSQL_DATABASE: "your-database-name"
-MYSQL_USER: "your-mysql-user"
-MYSQL_PASSWORD: "your-mysql-password"
-
-
-before_script:
-  - echo "Present Working Directory: $(pwd)"
+  ANGULAR_IMAGE: "node:14"
+  PHP_IMAGE: "php:7.4"
+  CYPRESS_IMAGE: "cypress/browsers:node18.6.0-chrome105-ff104"
+  MYSQL_IMAGE: "mysql:latest"
+  MYSQL_ROOT_PASSWORD: "your-root-password"
+  MYSQL_DATABASE: "your-database-name"
+  MYSQL_USER: "your-mysql-user"
+  MYSQL_PASSWORD: "your-mysql-password"
 
 build_angular:
   image: $ANGULAR_IMAGE
