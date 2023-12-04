@@ -1,6 +1,7 @@
 stages:
   - build_angular
   - build_symfony
+  - run_cypress
 
 variables:
   CYPRESS_IMAGE:  "cypress/browsers:node18.6.0-chrome105-ff104"
@@ -33,6 +34,14 @@ build_symfony:
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
     - php bin/console server:start &
+
+run_cypress:
+  image: $CYPRESS_IMAMGE
+  stage: run_cypress
+  script:
+    - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
+    - npm ci
+    - npm run runOnChrome 
 
 
 
