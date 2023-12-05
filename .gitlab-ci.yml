@@ -12,7 +12,9 @@ variables:
 
   
 build_symfony:
-  image: $PHP_IMAGE
+  image:
+    name: $PHP_IMAGE
+    entrypoint: ["cd /builds/Suraif16/angular-crud-app2/server && php ./bin/console server:start"]
   stage: build_symfony
   services:
     - name: mysql:latest
@@ -23,7 +25,7 @@ build_symfony:
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
-    - php bin/console server:start
+    # - php ./bin/console server:start
 
     # Installing MySQL here 
     - php bin/console doctrine:database:create --if-not-exists
