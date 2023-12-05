@@ -29,8 +29,7 @@ build_angular:
   - npm install -g @angular/cli 
   - npm install -g n
   - n 18.13.0  # Install Node.js v18.13
-  - ng serve &
-  - sleep 60s
+  - ng serve
 
 
 run_cypress:
