@@ -1,0 +1,60 @@
+stages:
+  - build_angular
+  - build_symfony
+  - run_cypress
+
+variables:
+  CYPRESS_IMAGE:  "cypress/browsers:node18.6.0-chrome105-ff104"
+  PHP_IMAGE: "php:8.1"
+  MYSQL_DATABASE: "root"
+  MYSQL_ROOT_PASSWORD: ""
+
+
+  
+build_symfony:
+  image:
+    name: $PHP_IMAGE
+    entrypoint: ["cd /builds/Suraif16/angular-crud-app2/server && php ./bin/console server:start"]
+  stage: build_symfony
+  services:
+    - name: mysql:latest
+      alias: mysql
+  script:
+    - apt-get update -y
+    - apt-get install -y unzip  # Install unzip, which is needed for Composer
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - cd /builds/Suraif16/angular-crud-app2/server
+    - composer install
+    # - php ./bin/console server:start
+
+    # Installing MySQL here 
+    - php bin/console doctrine:database:create --if-not-exists
+    - php bin/console doctrine:migrations:migrate --no-interaction
+    - mysql -hmysql -uroot -e "SHOW TABLES;"
+
+
+build_angular:
+  image: $CYPRESS_IMAGE
+  stage: build_angular
+  script:
+  # Start Angular app in the background
+  - cd /builds/Suraif16/angular-crud-app2/client
+  - npm ci
+  - npm install -g @angular/cli 
+  - npm install -g n
+  - n 18.13.0  # Install Node.js v18.13
+  - ng serve &
+
+
+run_cypress:
+  image: $CYPRESS_IMAGE
+  stage: run_cypress
+  script:
+    - cd /builds/Suraif16/angular-crud-app2/cypress-automation-framework
+    - npm ci
+    - npm run runOnChrome &
+
+
+
+
+
