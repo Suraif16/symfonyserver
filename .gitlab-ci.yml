@@ -6,11 +6,8 @@ stages:
 variables:
   CYPRESS_IMAGE:  "cypress/browsers:node18.6.0-chrome105-ff104"
   PHP_IMAGE: "php:8.1"
-  MYSQL_DATABASE: "angular"
+  MYSQL_DATABASE: "root"
   MYSQL_ROOT_PASSWORD: ""
-  MYSQL_USER: "root"
-  MYSQL_PASSWORD: ""
-  MYSQL_HOST: mysql
 
 
   
@@ -18,7 +15,7 @@ build_symfony:
   image: $PHP_IMAGE
   stage: build_symfony
   services:
-    - mysql:5.7
+    - mysql:latest
   script:
     - apt-get update -y
     - apt-get install -y unzip  # Install unzip, which is needed for Composer
@@ -28,11 +25,7 @@ build_symfony:
     - php bin/console server:start &
 
     # Installing MySQL here 
-    - apt-get update && apt-get install -y git curl libmcrypt-dev default-mysql-client
-    - mysql --version
-    - sleep 20
-    - echo "SHOW tables;" | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h "${MYSQL_HOST}" "${MYSQL_DATABASE}"
-    - echo "Database host is '${MYSQL_HOST}'"
+    - echo "SHOW tables;"
 
 
 build_angular:
