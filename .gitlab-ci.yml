@@ -24,7 +24,6 @@ build_symfony:
     - cd /builds/Suraif16/angular-crud-app2/server
     - composer install
     - php bin/console server:start
-    - sleep 60s
 
     # Installing MySQL here 
     - php bin/console doctrine:database:create --if-not-exists
