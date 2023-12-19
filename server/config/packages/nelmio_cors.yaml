@@ -1,6 +1,8 @@
 nelmio_cors:
     defaults:
         origin_regex: false
+        # allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
+        # Commented above and replaced with the below only to host in azure
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
         allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
         allow_headers: ['Content-Type', 'Authorization']
