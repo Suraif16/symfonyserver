@@ -27,9 +27,6 @@ jobs:
         with:
           files: 'composer.json'
 
-      - name: Creating dummy .env file
-        run: touch .env
-
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
@@ -49,7 +46,9 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -59,6 +58,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A417C87B48934002BF7E73C8C379AA0C }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C1198067BC214427BC72E4755FC17428 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_36D840D87606410583800AE60127CEDE }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
@@ -66,4 +72,4 @@ jobs:
           app-name: 'symfonycrudapp'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_821E56B3FA9D4B848236254A580DC3EC }}
+          
