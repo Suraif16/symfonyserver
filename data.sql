@@ -2,6 +2,15 @@
 INSERT INTO `user_auth` (`id`, `user_id`, `password`) VALUES
 (1, 'admin', '1234');
 
+CREATE TABLE `student` (
+    ->   `id` int(11) NOT NULL AUTO_INCREMENT,
+    ->   `fname` varchar(20) NOT NULL,
+    ->   `lname` varchar(20) NOT NULL,
+    ->   `nic` varchar(12) NOT NULL,
+    ->   `mobilenumber` varchar(10) NOT NULL,
+    ->   `email` varchar(30) NOT NULL,
+    ->   PRIMARY KEY (`id`)
+    -> ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `student` (`id`, `fname`, `lname`, `nic`, `mobilenumber`, `email`) VALUES
 (1, 'suraif', 'muhammad', '200026002119', '0766093011', 'muhammadsuraif2000@gmail.com'),
